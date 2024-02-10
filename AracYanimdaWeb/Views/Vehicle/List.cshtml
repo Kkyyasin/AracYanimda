@@ -1,0 +1,174 @@
+@model IEnumerable<VehicleListViewModel>
+    <div class="container2">
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="h2" style="text-align: center;">Araçlarımız</h1>
+                <hr>
+
+                <form asp-controller="Vehicle" asp-action="List" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Araç arayın" name="searchTerm">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Ara</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <a class="btn btn-primary form-control" href="/Vehicle/Create">Arac Ekle</a>
+                <hr>
+                <table class="table table-bordered table-hover" id="myTable">
+                    <thead>
+                        <tr>
+                            <th>Araç ID</th>
+                            <th>Marka</th>
+                            <th>Model</th>
+
+                            <th>Plaka</th>
+
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.VehicleId </td>
+                            <td>@item.Marka</td>
+                            <td>@item.Model</td>
+
+                            <td>@item.Plaka</td>
+
+                            <td>
+                                <a href="/Vehicle/Index/@item.VehicleId" class="btn btn-primary">Görüntüle</a>
+                                <a href="/Vehicle/Delete/@item.VehicleId" class="btn btn-danger">Sil</a>
+                            </td>
+                        </tr>
+                        }
+                        }
+                        else
+                        {
+                        <tr>
+                            <td colspan="8">Kayıt bulunamadı</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Genel Stiller */
+
+
+        .container2 {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        h1.h2 {
+            font-size: 2.5rem;
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .input-group .form-control {
+            border-radius: 0.25rem 0 0 0.25rem;
+            /* Sol üst ve sol alt yuvarlak köşeler */
+            border-right: none;
+            /* Sağ kenar çizgisini kaldırarak butonla birleşik görünüm sağlar */
+        }
+
+        .input-group .btn {
+            border-radius: 0 0.25rem 0.25rem 0;
+            /* Sağ üst ve sağ alt yuvarlak köşeler */
+            border-left: none;
+            /* Sol kenar çizgisini kaldırarak input ile birleşik görünüm sağlar */
+        }
+
+        /* Arama Formu Stilleri */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group .form-control {
+            border-radius: 20px 0 0 20px;
+            border: 1px solid #ccc;
+        }
+
+        .input-group .btn {
+            border-radius: 0 20px 20px 0;
+            border: 1px solid #ccc;
+            color: #fff;
+            background-color: #007bff;
+        }
+
+
+        /* Tablo Stilleri */
+        .table {
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: normal;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        /* Buton Stilleri */
+        .btn-primary,
+        .btn-danger {
+            margin: 5px;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-primary:hover,
+        .btn-danger:hover {
+            opacity: 0.85;
+        }
+
+        /* Detaylar ve İşlemler Sütunu Stilleri */
+        td:last-child {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Düzgün kenarlar ve padding için */
+        th,
+        td {
+            padding: 12px 15px;
+        }
+
+        /* Çizgileri daha belirginleştirmek için */
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        /* Her ikinci satırı daha belirginleştirmek için */
+        tbody tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
+    </style>

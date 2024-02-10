@@ -1,0 +1,119 @@
+@{
+// Layout'u iptal et
+Layout = null;
+
+// veya farklı bir layout kullan
+// Layout = "~/Views/Shared/_AnotherLayout.cshtml";
+}
+<div class="register-wrapper">
+    <div class="register-container">
+        <h2>Admin Kayıt</h2>
+        <form class="register-form" asp-controller="Admin" asp-action="Register" method="post">
+            <div class="form-group">
+                <label for="registerUsername">Kullanıcı Adı:</label>
+                <input type="text" id="registerUsername" name="registerUsername" required
+                    placeholder="Kullanıcı Adınız">
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">E-posta:</label>
+                <input type="email" id="registerEmail" name="registerEmail" required placeholder="email@example.com">
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">Şifre:</label>
+                <input type="password" id="registerPassword" name="registerPassword" required placeholder="Şifreniz">
+            </div>
+            <button type="submit" class="btn-register">Kayıt Ol</button>
+        </form>
+    </div>
+</div>
+<style>
+    body {
+        margin: 0;
+    }
+
+    .register-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(to right, #0056b3, #58a6ff);
+        /* Arka plan rengi */
+    }
+
+    .register-container {
+        width: 100%;
+        max-width: 400px;
+        /* Konteyner genişliği */
+        margin: 20px;
+        padding: 40px;
+        background: #fff;
+        /* Beyaz arka plan */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        /* Gölge efekti */
+        border-radius: 8px;
+        /* Kenar yuvarlaklığı */
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+        /* Başlık rengi */
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+        /* Form elemanları arası boşluk */
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+        /* Label rengi */
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: calc(100% - 20px);
+        /* Tam genişlik, padding düzeltmesiyle */
+        padding: 10px;
+        border: 1px solid #ddd;
+        /* İnput kenarlık */
+        border-radius: 4px;
+        /* İnput yuvarlaklığı */
+        box-sizing: border-box;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+        outline: none;
+        border-color: #007bff;
+        /* Fokus halinde kenarlık rengi */
+    }
+
+    .btn-register {
+        width: 100%;
+        /* Buton genişliği */
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        /* Buton yuvarlaklığı */
+        background-color: #007bff;
+        /* Buton arka plan rengi */
+        color: white;
+        /* Buton yazı rengi */
+        cursor: pointer;
+        margin-top: 10px;
+        /* Üstten boşluk */
+        font-size: 16px;
+        /* Yazı boyutu */
+    }
+
+    .btn-register:hover {
+        background-color: #0056b3;
+        /* Hover halinde buton rengi */
+    }
+</style>

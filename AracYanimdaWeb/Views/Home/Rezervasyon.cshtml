@@ -1,0 +1,271 @@
+@model Rezervasyon
+<div class="container">
+    <h2 class="display-4">Rezervasyon Bilgileri</h2>
+    <br>
+    <div class="container container2">
+        <div class="row container2">
+            <div class="col-md-6">
+                <h2>Kullanıcı Bilgileri</h2>
+                <hr>
+                <ul class="list-group">
+                    <li class="list-group-item">Ad: <strong>@ViewBag.user.Ad</strong></li>
+                    <li class="list-group-item">Soyad: <strong>@ViewBag.user.Soyad</strong></li>
+                    <li class="list-group-item">E-posta: <strong>@ViewBag.user.EPosta</strong></li>
+                    <li class="list-group-item">Telefon: <strong>@ViewBag.user.Telefon</strong></li>
+                    <li class="list-group-item">Kayıt Tarihi: <strong>@ViewBag.user.KayitTarihi</strong></li>
+                    <li class="list-group-item">Kayıt Tarihi: <strong>@ViewBag.user.Durum</strong></li>
+                </ul>
+                <a href="/User/Index/@ViewBag.user.UserId" class="btn btn-primary form-control">Git</a>
+            </div>
+            <div class="col-md-6">
+                <h2>Araç Bilgileri</h2>
+                <hr>
+                <ul class="list-group">
+                    <li class="list-group-item">Araç Markası: <strong>@ViewBag.vehicle.Marka</strong></li>
+                    <li class="list-group-item">Araç Modeli: <strong>@ViewBag.vehicle.Model</strong></li>
+                    <li class="list-group-item">Araç Plaka: <strong>@ViewBag.vehicle.Plaka</strong></li>
+                    <li class="list-group-item">Yıl: <strong>@ViewBag.vehicle.Yil</strong></li>
+                    <li class="list-group-item">Yakit Tipi: <strong>@ViewBag.vehicle.YakitTipi</strong></li>
+
+                    <li class="list-group-item">Yakit Durumu: <strong>@ViewBag.vehicle.YakitDurumu</strong></li>
+                </ul>
+                <a href="/Vehicle/Index/@ViewBag.vehicle.VehicleId" class="btn btn-primary form-control">Git</a>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container container2">
+        <div class="row container2">
+            <div class="col-md-6">
+                <h2>Ödeme Bilgileri</h2>
+                <hr>
+                <ul class="list-group">
+                    <li class="list-group-item">Ödeme Türü: <strong>Kart</strong></li>
+                    <li class="list-group-item">Ödeme Tutarı: <strong>@ViewBag.payment.Miktar</strong></li>
+                    <li class="list-group-item">Ödeme Durumu: <strong>@ViewBag.payment.OdemeDurumu</strong></li>
+
+
+                </ul>
+
+            </div>
+            <div class="col-md-6">
+                <h2>Durum Gösterimi</h2>
+                <hr>
+                <ul class="list-group">
+                    <li class="list-group-item">Rezervasyon Durumu: <strong>@Model.Durum</strong></li>
+
+                    <li class="list-group-item">Başlangıç Tarihi: <strong>@Model.BaslangicTarihi</strong></li>
+                    <li class="list-group-item">Bitiş Tarihi: <strong>@Model.BitisTarihi</strong></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+
+
+<style>
+    .container2 {
+
+        margin: 20px auto;
+        padding: 40px;
+
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1,
+    p {
+        margin-bottom: 20px;
+    }
+
+    .button {
+        display: inline-block;
+
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    .button:hover {
+        background-color: #0056b3;
+    }
+
+
+    .container {
+        width: 100%;
+
+    }
+
+    h1 {
+        margin-top: 0;
+        font-size: 24px;
+    }
+
+    .list-group {
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        /* Ensures the button is treated as inline-block */
+        text-align: center;
+        /* Centers text inside the button */
+        /* Other styles */
+
+    }
+
+    /* Specific styles for .btn-primary if needed */
+    .btn-primary {
+        /* ... other properties ... */
+        /* Ensure padding on left and right are equal */
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .list-group-item {
+        border-radius: 0;
+        padding: 10px 15px;
+    }
+
+    .list-group-item strong {
+        font-weight: bold;
+    }
+
+    .list-group-item a {
+        color: inherit;
+    }
+
+    .list-group-item a:hover {
+        text-decoration: underline;
+    }
+
+    .row {
+        margin-bottom: 20px;
+    }
+
+
+
+    .col-md-12 {
+        width: 100%;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #ccc;
+    }
+
+    .table th,
+    .table td {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .table thead th {
+        background-color: #f0f0f0;
+    }
+
+    .table td.status {
+        text-align: center;
+    }
+
+    .table td.date {
+        font-size: 12px;
+    }
+
+    .table a {
+        color: #000;
+    }
+
+    .table a:hover {
+        text-decoration: underline;
+    }
+
+    form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+
+    .col-md-6 {
+        width: 50%;
+
+
+        padding: 8px;
+        margin-bottom: 20px;
+        background-color: #fff;
+
+    }
+
+    /* Custom styles for .btn-primary */
+    .btn-primary {
+        background-color: #0056b3;
+        /* Change button color */
+        border-color: #004085;
+        /* Change border color */
+        color: #ffffff;
+        /* Change text color */
+        padding: 10px 20px;
+        /* Change padding to increase size */
+        font-size: 18px;
+        /* Larger font size */
+        border-radius: 5px;
+        /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.125);
+        /* Subtle shadow */
+        transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        /* Smooth transition for hover effect */
+    }
+
+    /* Hover state for .btn-primary */
+    .btn-primary:hover {
+        background-color: #004494;
+        /* Darken button on hover */
+        border-color: #003670;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        /* More pronounced shadow on hover */
+    }
+
+    /* Active state for .btn-primary */
+    .btn-primary:active {
+        background-color: #003670;
+        /* Even darker on click */
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+        /* Inner shadow to simulate depth */
+    }
+</style>

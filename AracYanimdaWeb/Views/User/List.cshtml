@@ -1,0 +1,215 @@
+@model IEnumerable<UserListViewModel>
+    <div class="container2">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="h2">Kullanıcılarımız</h1>
+                <hr>
+                <form asp-controller="User" asp-action="List" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Kullanıcı arayın" name="searchTerm">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary">Ara</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Kullanıcı ID</th>
+                            <th>Ad</th>
+                            <th>Soyad</th>
+                            <th>Eposta Adı</th>
+
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count() > 0)
+                        {
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>@item.UserId</td>
+                            <td>@item.Ad</td>
+                            <td>@item.Soyad</td>
+                            <td>@item.EPosta</td>
+
+                            <td>
+                                <a href="/User/Index/@item.UserId" class="btn btn-primary">Görüntüle</a>
+                                <a href="/User/Delete/@item.UserId" class="btn btn-danger">Sil</a>
+                            </td>
+                        </tr>
+                        }
+                        }
+                        else
+                        {
+                        <tr>
+                            <td colspan="6">Kayıt bulunamadı</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <style>
+        /* Genel Stiller */
+
+
+        .container2 {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        h1.h2 {
+            font-size: 2.5rem;
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Arama Formu Stilleri */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group .form-control {
+            border-radius: 20px 0 0 20px;
+        }
+
+        .input-group .btn {
+            border-radius: 0 20px 20px 0;
+            border: 1px solid #ddd;
+            color: #fff;
+            background-color: #007bff;
+        }
+
+        /* Tablo Stilleri */
+        .table {
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: white;
+            font-weight: normal;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        /* Buton Stilleri */
+        .btn-primary,
+        .btn-danger {
+            margin: 5px;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-primary:hover,
+        .btn-danger:hover {
+            opacity: 0.85;
+        }
+
+        /* Detaylar ve İşlemler Sütunu Stilleri */
+        td:last-child {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Düzgün kenarlar ve padding için */
+        th,
+        td {
+            padding: 12px 15px;
+        }
+
+        /* Çizgileri daha belirginleştirmek için */
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        /* Her ikinci satırı daha belirginleştirmek için */
+        tbody tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
+
+
+        body {
+            font-family: sans-serif;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-top: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .btn {
+            border-radius: 0;
+            padding: 5px 10px;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        /* Yeni Eklenen Stilller */
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        /* Yeniden Düzenlenen Stilli*/
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .btn-primary,
+        .btn-danger {
+            border: 1px solid transparent;
+        }
+
+        .btn-primary:hover,
+        .btn-danger:hover {
+            opacity: 0.8;
+        }
+    </style>

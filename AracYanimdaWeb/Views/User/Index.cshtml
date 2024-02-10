@@ -1,0 +1,408 @@
+@model UserListViewModel
+<div class="container container2">
+    <h1 class="display-4">Kullanıcı Bilgileri</h1>
+    <hr>
+    <div class="row ">
+
+        <div class="col-md-7  ">
+
+            <ul class="list-group">
+                <li class="list-group-item">Ad: <strong>@Model.Ad</strong></li>
+                <li class="list-group-item">Soyad: <strong>@Model.Soyad</strong></li>
+                <form id="editEmailForm">
+                    <input type="hidden" name="userid" value="@Model.UserId">
+                    <li class="list-group-item">
+                        E-posta: <input type="text" id="emailInput" name="emailInput" value="@Model.EPosta"
+                            style="display: none;">
+                        <strong id="emailDisplay">@Model.EPosta</strong>
+                        <div class="float-right">
+                            <a href="#" id="editEmailButton" class="btn btn-primary btn-sm">Düzenle</a>
+                            <button type="submit" id="updateEmailButton" style="display: none;"
+                                class="btn btn-success btn-sm">Güncelle</button>
+                        </div>
+                    </li>
+                </form>
+
+
+                <form id="telefonForm">
+                    <input type="hidden" name="userid" value="@Model.UserId">
+                    <li class="list-group-item">
+                        Telefon: <input type="text" id="telefonInput" name="telefonInput" value="@Model.Telefon"
+                            style="display: none;">
+                        <strong id="telefonDisplay">@Model.Telefon</strong>
+                        <div class="float-right">
+                            <a href="#" id="telefonEditButton" class="btn btn-primary btn-sm">Düzenle</a>
+                            <button type="submit" id="telefonUpdateButton" style="display: none;"
+                                class="btn btn-success btn-sm">Güncelle</button>
+                        </div>
+                    </li>
+                </form>
+                <li class="list-group-item">Kayıt Tarihi: <strong>@Model.KayitTarihi</strong></li>
+
+                <li class="list-group-item">
+                    Durum:
+
+                    <strong id="durumDisplay">@Model.Durum</strong>
+
+                </li>
+
+
+            </ul>
+        </div>
+        <div class="col-md-5">
+            <h2>Ehliyet Bilgileri</h2>
+            @if (@ViewBag.License == null )
+            {
+            <div class="alert alert-warning" role="alert">
+                Ehliyet bulunmamaktadır.
+            </div>
+            }else{
+            <ul class="list-group">
+                <li class="list-group-item">Ehliyet Tipi: <strong>@ViewBag.License.EhliyetTipi</strong></li>
+                <li class="list-group-item">Ehliyet No: <strong>@ViewBag.License.EhliyetNo</strong></li>
+                <li class="list-group-item">Son Geçerlilik Tarihi: <strong>@ViewBag.License.SonGecerlilikTarihi</strong>
+                </li>
+            </ul>}
+        </div>
+
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-9">
+            <h2>Rezervasyonlar</h2>
+            @if (@ViewBag.Rezervasyon ==null )
+            {
+            <div class="alert alert-warning" role="alert">
+                Rezervasyon bulunmamaktadır.
+            </div>
+            }else{
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Araç</th>
+                        <th>Plaka</th>
+                        <th>Başlangıç Tarihi</th>
+                        <th>Bitiş Tarihi</th>
+                        <th>Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var rezervasyon in ViewBag.Rezervasyon)
+                    {
+                    <tr>
+                        <td>@rezervasyon.AracIsmi</td>
+                        <td>@rezervasyon.Plaka</td>
+                        <td>@rezervasyon.BaslangicTarihi</td>
+
+                        <td>@if( @rezervasyon.BitisTarihi != null){
+                            @rezervasyon.BitisTarihi}</td>
+                        <td>@rezervasyon.RezervasyonDurum</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>}
+        </div>
+
+
+    </div>
+
+    <div class="row">
+
+
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Ödemeler</h2>
+
+            @if (@ViewBag.payments ==null )
+            {
+            <div class="alert alert-warning" role="alert">
+                Ödeme bulunmamaktadır.
+            </div>
+            }else{
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <th>Miktar</th>
+                        <th>Ödeme Durumu</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var odeme in @ViewBag.payments)
+                    {
+                    <tr>
+
+                        <td>@odeme.Miktar</td>
+                        <td>@odeme.OdemeDurumu</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>}
+        </div>
+        <div class="col-md-6">
+            <h2>Ödeme Yöntemleri</h2>
+
+            @if (@ViewBag.paymentMethods==null )
+            {
+            <div class="alert alert-warning" role="alert">
+                Ödeme Yöntemi bulunmamaktadır.
+            </div>
+            }else{
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ad Soyad</th>
+                        <th>Kart Numarası</th>
+                        <th>Son Kullanma Tarihi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var odeme in ViewBag.paymentMethods)
+                    {
+                    <tr>
+                        <td>@odeme.AdSoyad</td>
+                        <td>@odeme.KartNumarasi</td>
+                        <td>@odeme.SonKullanma</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>}
+
+        </div>
+
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-9 text-center">
+
+            <form action="#">
+                <div class="mb-3">
+                    <label for="mesaj">Mesajınız:</label>
+                    <textarea class="form-control" id="mesaj" rows="4"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="iletisimTuru">İletişim Türü:</label>
+                    <select class="form-control" id="iletisimTuru">
+                        <option value="eposta">Eposta</option>
+                        <option value="telefon">Telefon</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg mt-2 form-control">Gönder</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById('editEmailButton').addEventListener('click', function () {
+        var emailInput = document.getElementById('emailInput');
+        var emailDisplay = document.getElementById('emailDisplay');
+        var updateEmailButton = document.getElementById('updateEmailButton');
+
+        if (emailInput.style.display === 'none') {
+            emailInput.style.display = 'inline-block';
+            emailDisplay.style.display = 'none';
+            emailInput.value = emailDisplay.innerHTML;
+            updateEmailButton.style.display = 'inline-block';
+            this.style.display = 'none';
+        }
+    });
+
+    document.getElementById('updateEmailButton').addEventListener('click', function () {
+        var emailInput = document.getElementById('emailInput');
+        var emailDisplay = document.getElementById('emailDisplay');
+        var editEmailButton = document.getElementById('editEmailButton');
+
+        if (emailInput.style.display === 'inline-block') {
+            emailInput.style.display = 'none';
+            emailDisplay.style.display = 'inline';
+            emailDisplay.innerText = emailInput.value;
+            editEmailButton.style.display = 'inline-block';
+            this.style.display = 'none';
+        }
+        var emailInput = document.getElementById('emailInput').value;
+
+        fetch('/User/UpdateEmail?userid=@Model.UserId&emailInput=' + emailInput, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // İstek içeriğinin türü
+            }
+        })
+
+            .catch(error => {
+                // İstek hatalıysa burası çalışır
+                console.error('İstek hatası:', error);
+            });
+    });
+    document.getElementById('telefonEditButton').addEventListener('click', function () {
+        var telefonInput = document.getElementById('telefonInput');
+        var telefonDisplay = document.getElementById('telefonDisplay');
+        var telefonUpdateButton = document.getElementById('telefonUpdateButton');
+
+        telefonInput.style.display = 'inline-block';
+        telefonDisplay.style.display = 'none';
+        telefonUpdateButton.style.display = 'inline';
+
+        telefonInput.value = telefonDisplay.innerText;
+        this.style.display = 'none';
+    });
+
+    document.getElementById('telefonUpdateButton').addEventListener('click', function () {
+        var telefonInput = document.getElementById('telefonInput');
+        var telefonDisplay = document.getElementById('telefonDisplay');
+        var telefonEditButton = document.getElementById('telefonEditButton');
+
+        telefonInput.style.display = 'none';
+        telefonDisplay.style.display = 'inline';
+        telefonEditButton.style.display = 'inline';
+
+        telefonDisplay.innerText = telefonInput.value;
+        this.style.display = 'none';
+        var value = telefonInput.value;
+        fetch('/User/UpdatePhone?userid=@Model.UserId&telefonInput=' + value, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // İstek içeriğinin türü
+            }
+        })
+
+            .catch(error => {
+                // İstek hatalıysa burası çalışır
+                console.error('İstek hatası:', error);
+            });
+    });
+    document.getElementById('editButton2').addEventListener('click', function () {
+        var durumSelect = document.getElementById('durumSelect');
+        var durumDisplay = document.getElementById('durumDisplay');
+        var updateButton = document.getElementById('updateButton2');
+
+        durumSelect.style.display = 'inline-block';
+        durumDisplay.style.display = 'none';
+        updateButton.style.display = 'inline';
+        this.style.display = 'none';
+    });
+
+    document.getElementById('updateButton2').addEventListener('click', function () {
+        var durumSelect = document.getElementById('durumSelect');
+        var durumDisplay = document.getElementById('durumDisplay');
+        var editButton = document.getElementById('editButton2');
+
+        durumSelect.style.display = 'none';
+        durumDisplay.style.display = 'inline';
+        durumDisplay.innerText = durumSelect.options[durumSelect.selectedIndex].text;
+        editButton.style.display = 'inline';
+        this.style.display = 'none';
+        var value = durumSelect.value;
+        fetch('/User/UpdateDurum?userid=@Model.UserId&durumSelect=' + value, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded' // İstek içeriğinin türü
+            }
+        })
+
+            .catch(error => {
+                // İstek hatalıysa burası çalışır
+                console.error('İstek hatası:', error);
+            });
+    });
+
+
+</script>
+<style>
+    .container2 {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    h1.display-4 {
+        font-size: 2.5rem;
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* Liste Grupları için stil */
+    .list-group-item {
+        font-size: 1rem;
+        border: none;
+        padding: 15px 20px;
+    }
+
+    .list-group-item strong {
+        color: #0056b3;
+    }
+
+    /* Form elemanları için stil */
+    input[type="text"],
+    select {
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        padding: .375rem .75rem;
+    }
+
+    /* Buton Stilleri */
+    .btn {
+        margin: 5px;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 16px;
+        font-size: .875rem;
+        transition: background-color 0.2s;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    /* Ek Stiller: Header, tablo ve diğer öğeler için */
+    h2 {
+        font-size: 2rem;
+        color: #0056b3;
+        margin-top: 30px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+</style>

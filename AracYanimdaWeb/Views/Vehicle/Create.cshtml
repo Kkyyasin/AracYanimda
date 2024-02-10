@@ -1,0 +1,205 @@
+@model VehicleListViewModel
+<h2>Araba Ekle</h2>
+<hr>
+<form id="aracForm" action="Create" method="post">
+    <div class="form-group" action="create" method="post">
+        <label asp-for="Marka">Marka:</label>
+        <select class="form-control" id="marka" asp-for="Marka">
+            <option value="">Seçiniz</option>
+            <!-- Marka seçenekleri buraya gelecek -->
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Model">Model:</label>
+        <select class="form-control" id="model" asp-for="Model">
+            <option value="">Seçiniz</option>
+            <!-- Model seçenekleri buraya gelecek -->
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="YakitTipi">Yakıt:</label>
+        <select class="form-control" id="yakit" asp-for="YakitTipi">
+            <option value="">Seçiniz</option>
+            <!-- Yakıt seçenekleri buraya gelecek -->
+        </select>
+    </div>
+
+    <label class="alert alert-success" for="" id="fiyat">Fiyat:</label>
+    <button class="btn btn-primary form-control" type="submit">Veriyi Gönder</button>
+
+</form>
+
+<script>
+
+    async function getAracMarka() {
+        try {
+            const response = await fetch('https://aracimyanimda.azurewebsites.net/api/vehicle/marka');
+            if (response.ok) {
+                const markaList = await response.json();
+                const markaSelect = document.getElementById('marka');
+
+                markaList.forEach(marka => {
+                    const option = document.createElement('option');
+                    option.value = marka;
+                    option.textContent = marka;
+                    markaSelect.appendChild(option);
+                });
+            } else {
+                console.error('Bir hata oluştu:', response.status);
+            }
+        } catch (error) {
+            console.error('Bir hata oluştu:', error);
+        }
+    }
+    async function getModelsByMarka() {
+        const markaSelect = document.getElementById('marka');
+        const modelSelect = document.getElementById('model');
+        const selectedMarka = markaSelect.value;
+
+        try {
+            const response = await fetch(`https://aracimyanimda.azurewebsites.net/api/vehicle/model?marka=${selectedMarka}`);
+            if (response.ok) {
+                const modelList = await response.json();
+
+                // Önceki model seçeneklerini temizle
+                modelSelect.innerHTML = '';
+
+                modelList.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+            } else {
+                console.error('Bir hata oluştu:', response.status);
+            }
+        } catch (error) {
+            console.error('Bir hata oluştu:', error);
+        }
+    }
+    async function getMarkaModels() {
+        const markaSelect = document.getElementById('marka');
+        const modelSelect = document.getElementById('model');
+        const yakitSelect = document.getElementById('yakit');
+        const selectedMarka = markaSelect.value;
+        const selectedModel = modelSelect.value;
+
+        try {
+            const response = await fetch(`https://aracimyanimda.azurewebsites.net/api/vehicle/yakit?marka=${selectedMarka}&model=${selectedModel}`);
+            if (response.ok) {
+                const yakitList = await response.json();
+
+                // Önceki yakıt seçeneklerini temizle
+                yakitSelect.innerHTML = '';
+
+                yakitList.forEach(yakit => {
+                    const option = document.createElement('option');
+                    option.value = yakit;
+                    option.textContent = yakit;
+                    yakitSelect.appendChild(option);
+                });
+            } else {
+                console.error('Bir hata oluştu:', response.status);
+            }
+        } catch (error) {
+            console.error('Bir hata oluştu:', error);
+        }
+    }
+    async function getAracFiyat() {
+        const markaSelect = document.getElementById('marka');
+        const modelSelect = document.getElementById('model');
+        const yakitSelect = document.getElementById('yakit');
+        const fiyatLabel = document.getElementById('fiyat');
+        const selectedMarka = markaSelect.value;
+        const selectedModel = modelSelect.value;
+        const selectedYakit = yakitSelect.value;
+
+        try {
+            const response = await fetch(`https://aracimyanimda.azurewebsites.net/api/vehicle/fiyat?marka=${selectedMarka}&model=${selectedModel}&yakit=${selectedYakit}`);
+            if (response.ok) {
+                const fiyat = await response.json();
+
+                // Fiyatı div içine yazdır
+                fiyatLabel.textContent = `Fiyat: ${fiyat}`;
+
+            } else {
+                console.error('Bir hata oluştu:', response.status);
+            }
+        } catch (error) {
+            console.error('Bir hata oluştu:', error);
+        }
+    }
+    async function checkYakitOptions() {
+        const yakitSelect = document.getElementById('yakit');
+
+        // Yakıt seçeneklerini al
+        const options = yakitSelect.getElementsByTagName('option');
+
+        // Eğer sadece bir seçenek varsa, seçili yakıt otomatik olarak gösterilsin
+        if (options.length === 2) {
+            yakitSelect.selectedIndex = 1;
+            getAracFiyat();
+        }
+    }
+    // Marka seçimi değiştiğinde model verilerini getir
+    async function getModelYakit() {
+        // Seçilen modelin yakıt türlerini al
+        const markaSelect = document.getElementById('marka');
+        const modelSelect = document.getElementById('model');
+        const yakitSelect = document.getElementById('yakit');
+        const selectedMarka = markaSelect.value;
+        const selectedModel = modelSelect.value;
+
+        try {
+            const response = await fetch(`https://aracimyanimda.azurewebsites.net/api/vehicle/yakit?marka=${selectedMarka}&model=${selectedModel}`);
+            if (response.ok) {
+                const yakitList = await response.json();
+                yakitSelect.innerHTML = ''; // Seçenekleri temizle
+
+                yakitList.forEach(yakit => {
+                    const option = document.createElement('option');
+                    option.value = yakit;
+                    option.textContent = yakit;
+                    yakitSelect.appendChild(option);
+                });
+
+                // Yakıt seçenek sayısına göre işlem yap
+                if (yakitList.length === 1) {
+                    // Eğer sadece bir seçenek varsa
+                    yakitSelect.selectedIndex = 1; // Otomatik olarak seç
+                    getAracFiyat();
+                }
+            } else {
+                console.error('Bir hata oluştu:', response.status);
+            }
+        } catch (error) {
+            console.error('Bir hata oluştu:', error);
+        }
+    }
+
+    // Kullanımı
+    getAracMarka();
+
+    document.getElementById('marka').addEventListener('change', getModelsByMarka);
+
+    document.getElementById('model').addEventListener('change', getModelYakit);
+
+    // Yakıt seçimi değiştiğinde fiyatı getir
+    document.getElementById('yakit').addEventListener('change', getAracFiyat);
+</script>
+<style>
+    .fiyat-container {
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    #fiyatDiv {
+        font-size: 18px;
+        font-weight: bold;
+        color: #007bff;
+    }
+</style>

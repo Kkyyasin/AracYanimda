@@ -1,0 +1,294 @@
+@model VehicleListViewModel
+<div class="container container2">
+    <h1 class="display-4">Araç Bilgileri</h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <img src="~/img/arac.jpeg" class="img-fluid" alt="Araç fotoğrafı">
+        </div>
+        <div class="col-md-6 ">
+            <ul class="list-group">
+                <li class="list-group-item">Marka: <strong>@Model.Marka</strong></li>
+                <li class="list-group-item">Model: <strong>@Model.Model</strong></li>
+                <li class="list-group-item">Yıl: <strong>@Model.Yil</strong></li>
+                <li class="list-group-item">Plaka: <strong>@Model.Plaka</strong></li>
+                <li class="list-group-item">Yakıt Tipi: <strong>@Model.YakitTipi</strong></li>
+                <li class="list-group-item">Yakıt Durumu: <strong>@Model.YakitDurumu</strong></li>
+                <li class="list-group-item">Fiyat: <strong>@ViewBag.FiyatBilgileri.FiyatGunluk TL / Günlük</strong></li>
+                <li class="list-group-item">Fiyat: <strong>@ViewBag.FiyatBilgileri.FiyatDakika TL / Dakika</strong></li>
+                <li class="list-group-item">Ücretsiz Km: <strong>@ViewBag.FiyatBilgileri.KmSiniriUcretsiz Km</strong>
+                </li>
+                <li class="list-group-item">İlave Km Ücreti: <strong>@ViewBag.FiyatBilgileri.IlaveKmUcreti TL</strong>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-md-6">
+            <h2>Konum</h2>
+            <p>@ViewBag.Location.Address, @ViewBag.Location.City</p>
+
+            @{
+
+            var latitude = ViewBag.Location.Latitude.ToString().Replace(',', '.');
+            var longitude = ViewBag.Location.Longitude.ToString().Replace(',', '.');
+            }
+
+            <div id="map" style="width: 100%; height: 450px;"></div>
+
+            <script>
+                function initMap() {
+                    var latitude = parseFloat('@ViewBag.Location.Latitude'.replace(',', '.'));
+                    var longitude = parseFloat('@ViewBag.Location.Longitude'.replace(',', '.'));
+
+                    var myLatLng = { lat: latitude, lng: longitude };
+
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        center: myLatLng,
+                        zoom: 15
+                    });
+
+                    new google.maps.Marker({
+                        position: myLatLng,
+                        map: map,
+                        title: 'Konum'
+                    });
+                }
+            </script>
+
+            <script async defer
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWnz8wjlW5exPn_gYOFT4E7LoMKK3yjCk&callback=initMap">
+                </script>
+
+        </div>
+        <div class="col-md-6">
+            <h2>Bakım Listesi</h2>
+            <ul class="list-group">
+                @if (ViewBag.Bakimlar == null || ViewBag.Bakimlar.Count == 0)
+                {
+                <div class="alert alert-warning" role="alert">
+                    Bakım bulunmamaktadır.
+                </div>
+                }
+                else
+                {
+                @foreach (var bakim in ViewBag.Bakimlar)
+                {
+
+                <li class="list-group-item">@bakim.BakimTarihi - @bakim.BakimAciklamasi <div class="float-right">
+                        <a asp-controller="Vehicle" asp-action="BakimSil" asp-route-bakimId="@bakim.BakimId"
+                            asp-route-vehicleId="@Model.VehicleId" class="btn btn-danger btn-sm">Sil</a>
+
+                    </div>
+                </li>
+
+                }
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Fiyat Değiştirme</h2>
+            <form action="/Vehicle/FiyatGuncelle" method="post" id="fiyatform" onsubmit="return validateForm()">
+                <input type="hidden" id="Id" name="Id" value="@Model.VehicleId" />
+                <div class="mb-3">
+                    <label for="gunlukFiyat" class="form-label">Günlük Fiyat:</label>
+                    <input type="number" class="form-control" id="gunlukFiyat" name="gunlukFiyat"
+                        placeholder="Yeni günlük fiyat" step="1">
+                </div>
+                <div class="mb-3">
+                    <label for="dakikaFiyat" class="form-label">Dakika Fiyatı:</label>
+                    <input type="number" class="form-control" id="dakikaFiyat" name="dakikaFiyat"
+                        placeholder="Yeni dakika fiyatı" step="0.1">
+                </div>
+                <button onclick="eylemTamamlandi2()" type="submit" class="btn btn-primary">Fiyatları Güncelle</button>
+            </form>
+
+        </div>
+        <div class="col-md-6">
+            <h2>Bakım Yap</h2>
+            <form id="bakimForm" action="/Vehicle/BakimEkle" method="post">
+                <input type="hidden" id="vehicleId" name="vehicleId" value="@Model.VehicleId" />
+                <div class="mb-3">
+                    <label for="bakimTarihi" class="form-label">Bakım Tarihi:</label>
+                    <input type="datetime-local" class="form-control" id="bakimTarihi" name="bakimTarihi" />
+                </div>
+                <div class="mb-3">
+                    <label for="bakimAciklamasi" class="form-label">Bakım Açıklaması:</label>
+                    <textarea class="form-control" id="bakimAciklamasi" name="bakimAciklamasi" rows="3"></textarea>
+                </div>
+                <button type="submit" onclick="eylemTamamlandi()" class=" btn btn-primary">Bakımı Kaydet</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function eylemTamamlandi() {
+        // Burada eylemin gerçekleştirildiğini varsayalım
+        // Örneğin, bir işlem yapıldıktan sonra:
+
+        // Oluşturuldu mesajını göstermek için
+        //alert("Oluşturuldu!");
+
+        // veya SweetAlert2 gibi kütüphaneleri kullanarak
+
+        const form = document.getElementById('bakimForm');
+        if (form.checkValidity()) {
+            // Form geçerli ise SweetAlert2 ile bildirim gösterme
+            Swal.fire({
+                icon: 'success',
+                title: 'Bakım Kaydedildi!',
+                text: 'Bakım başarıyla kaydedildi.',
+                timer: 3000, // 3 saniye bekletme süresi (ms cinsinden)
+                timerProgressBar: true,
+                showConfirmButton: false
+            }).then(() => {
+                form.submit(); // Formu gönderme
+            });
+        } else {
+            // Form geçerli değilse SweetAlert2 ile hata mesajı gösterme
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata!',
+                text: 'Lütfen tüm alanları doldurunuz.'
+            });
+        }
+    }
+    function eylemTamamlandi2() {
+        // Burada eylemin gerçekleştirildiğini varsayalım
+        // Örneğin, bir işlem yapıldıktan sonra:
+
+        // Oluşturuldu mesajını göstermek için
+        //alert("Oluşturuldu!");
+
+        // veya SweetAlert2 gibi kütüphaneleri kullanarak
+
+        const form = document.getElementById('fiyatform');
+        if (form.checkValidity()) {
+            // Form geçerli ise SweetAlert2 ile bildirim gösterme
+            Swal.fire({
+                icon: 'success',
+                title: 'Fiyat Güncellemesi!',
+                text: 'Fiyat başarıyla güncellendi...',
+                timer: 3000, // 3 saniye bekletme süresi (ms cinsinden)
+                timerProgressBar: true,
+                showConfirmButton: false
+            }).then(() => {
+                form.submit(); // Formu gönderme
+            });
+        } else {
+            // Form geçerli değilse SweetAlert2 ile hata mesajı gösterme
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata!',
+                text: 'Lütfen tüm alanları doldurunuz.'
+            });
+        }
+    }
+    function validateForm() {
+        var gunlukFiyat = parseFloat(document.getElementById("gunlukFiyat").value);
+        var dakikaFiyat = parseFloat(document.getElementById("dakikaFiyat").value);
+
+        // Doğrulama kuralları kontrol ediliyor
+        if (gunlukFiyat === 0 || dakikaFiyat === 0) {
+            alert("Lütfen sıfırdan farklı bir değer girin.");
+            return false;
+        }
+
+        // Özel doğrulama kuralları burada yapılabilir
+        // Örneğin, belirli bir aralıkta olmalı, vs.
+
+        return true; // Eğer geçerli ise form submit edilir
+    }
+</script>
+<style>
+    /* Genel Stiller */
+
+
+    .container2 {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    h1.display-4 {
+        font-size: 2.5rem;
+        color: #007bff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    hr {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* İmgeler için stil */
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+    }
+
+    /* Liste Grupları için stil */
+    .list-group-item {
+        font-size: 1rem;
+        border: none;
+        padding: 15px 20px;
+    }
+
+    .list-group-item strong {
+        color: #0056b3;
+    }
+
+    /* Harita Stilleri */
+    #map {
+        width: 100%;
+        height: 450px;
+        border-radius: 5px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+    }
+
+    /* Form Stilleri */
+    form {
+        margin-top: 20px;
+    }
+
+    .form-control {
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #555;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        color: white;
+        font-size: 1rem;
+        margin-top: 10px;
+        transition: background-color 0.2s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    /* Bakım ve Fiyat Değiştirme Bölümü Stilleri */
+    h2 {
+        font-size: 2rem;
+        color: #0056b3;
+        margin-top: 30px;
+    }
+</style>
