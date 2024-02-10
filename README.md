@@ -13,4 +13,5 @@ Günümüz dijital dünyasında, güçlü ve etkili bir kullanıcı deneyimi sun
  - **Azure Cloud Entegrasyonu:** Azure üzerinde barındırılan admin paneli, yüksek erişilebilirlik, güvenlik ve performans standartlarından yararlanır. Bu, yöneticilerin her yerden ve her zaman uygulamayı yönetebilmeleri için ideal bir ortam yaratır.
  - **RESTful API İletişimi:** Panel, arka uçta bulunan veritabanı ve diğer servislerle RESTful API'ler aracılığıyla iletişim kurar. Bu sayede veri alışverişi standartlara uygun, güvenli ve etkili bir şekilde gerçekleşir.
  - **Kullanıcı Dostu Arayüz:** Panel, kullanıcı dostu bir arayüz sunarak, yöneticilerin ihtiyaç duyduğu işlemleri hızlı ve etkili bir şekilde gerçekleştirmelerini sağlar. İntuitif tasarım, kolay navigasyon ve açıklayıcı bilgiler yöneticilere zaman kazandırır ve iş yüklerini hafifletir.
+   
  ![enter image description here](https://r.resimlink.com/RpxT-EzAy.png)
