@@ -15,6 +15,8 @@ Günümüz dijital dünyasında, güçlü ve etkili bir kullanıcı deneyimi sun
  - **Kullanıcı Dostu Arayüz:** Panel, kullanıcı dostu bir arayüz sunarak, yöneticilerin ihtiyaç duyduğu işlemleri hızlı ve etkili bir şekilde gerçekleştirmelerini sağlar. İntuitif tasarım, kolay navigasyon ve açıklayıcı bilgiler yöneticilere zaman kazandırır ve iş yüklerini hafifletir.
    
  ![enter image description here](https://r.resimlink.com/RpxT-EzAy.png)
+## Azure Entegrasyonu
+Uygulamanın altyapısı, Microsoft Azure üzerinde barındırılmaktadır. Azure API Management, uygulama ve kullanıcıları arasında güvenli ve etkili bir iletişim köprüsü kurarken, Azure SQL Database (MySQL), uygulamanın veri depolama ihtiyaçlarını karşılar. Bu entegrasyon, uygulamanın yüksek performanslı, güvenilir ve ölçeklenebilir olmasını sağlar. Ayrıca, Azure'un sağladığı güvenlik ve yönetim özellikleri, kullanıcı verilerinin korunmasında ve uygulamanın sorunsuz çalışmasında hayati rol oynar.
  ## Mobil Uygulama Hakkında
 Web platformumuzun yanı sıra, kullanıcıların Android cihazları aracılığıyla yakınlarındaki kiralık araçları keşfedebilecekleri, rezervasyon yapabilecekleri ve var olan rezervasyonlarını yönetebilecekleri bir mobil uygulamamız mevcuttur: "Aracım Yanımda". Kullanıcı dostu arayüzü ile tasarlanan bu uygulama, araç kiralama sürecini olabildiğince sorunsuz ve verimli bir hale getirmeyi amaçlar.
 
