@@ -15,3 +15,7 @@ Günümüz dijital dünyasında, güçlü ve etkili bir kullanıcı deneyimi sun
  - **Kullanıcı Dostu Arayüz:** Panel, kullanıcı dostu bir arayüz sunarak, yöneticilerin ihtiyaç duyduğu işlemleri hızlı ve etkili bir şekilde gerçekleştirmelerini sağlar. İntuitif tasarım, kolay navigasyon ve açıklayıcı bilgiler yöneticilere zaman kazandırır ve iş yüklerini hafifletir.
    
  ![enter image description here](https://r.resimlink.com/RpxT-EzAy.png)
+ ## Mobil Uygulama Hakkında
+Web platformumuzun yanı sıra, kullanıcıların Android cihazları aracılığıyla yakınlarındaki kiralık araçları keşfedebilecekleri, rezervasyon yapabilecekleri ve var olan rezervasyonlarını yönetebilecekleri bir mobil uygulamamız mevcuttur: "Aracım Yanımda". Kullanıcı dostu arayüzü ile tasarlanan bu uygulama, araç kiralama sürecini olabildiğince sorunsuz ve verimli bir hale getirmeyi amaçlar.
+
+Mobil uygulamamızı keşfetmek ve daha fazla bilgi edinmek için aşağıdaki bağlantıyı ziyaret edebilirsiniz: [Aracım Yanımda Mobil Uygulaması](https://github.com/erendogan6/Aracim-Yanimda)
